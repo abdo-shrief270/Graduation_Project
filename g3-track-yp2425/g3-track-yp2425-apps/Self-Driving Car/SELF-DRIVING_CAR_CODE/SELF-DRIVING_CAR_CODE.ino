@@ -1,3 +1,4 @@
+
 #include <Wire.h>
 
 #define buadRate 9600
@@ -208,11 +209,19 @@ void checkCommand(String str) {
     }
 
     Serial.print("executePath:success=true&status=inProgress\r");
+    calculateAngleAndDistance(pathDetails[0],pathDetails[1],&pathDetails[0],&pathDetails[1]);
     SetCarPath(yaw + pathDetails[0], pathDetails[1], pathDetails[2]); // Execute the path command
     Serial.print("executePath:success=true&status=completed\r");
   }
 }
 
+void calculateAngleAndDistance(float x, float y, float &angle, float &distance) {
+    // Calculate the direct distance using the Pythagorean theorem
+    distance = sqrt(x * x + y * y);
+
+    // Calculate the angle in radians and convert it to degrees
+    angle = atan2(y, x) * (180.0 / PI); // Convert radians to degrees
+}
 
 /**
  * Function to move the car in a square pattern.
