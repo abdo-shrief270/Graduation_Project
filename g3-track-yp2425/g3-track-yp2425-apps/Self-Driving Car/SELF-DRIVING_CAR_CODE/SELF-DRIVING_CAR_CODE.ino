@@ -1,15 +1,37 @@
-
 #include <Wire.h>
 
 #define buadRate 9600
 
 // String constants used for parsing serial commands
-String sequenceCommand = "executeSequence"  , pathCommand = "executePath";
+String sequenceCommand = "executeSequence"  , pathCommand = "executePath"     , locationCommand = "executeCoordinates";
 String path_angleCommand = "angle"          , path_angleDirCommand = "dir";
 String path_distanceCommand = "distance"    , path_speedCommand = "speed";
 String path_substringCommand = "&"          , path_equalCommand = "=";
+String location_substringCommand = "&"      , location_equalCommand = "=";
+String location_Xvalue = "xValue"           , location_Yvalue = "yValue"      , location_Speedvalue = "speed";
 
 int pathDetails[3]; // Array to store path parameters (angle, distance, speed)
+signed int locationDetails[3];
+
+
+
+void calculate_IMU_error();
+void update_mpu_readings();
+void moveForward();
+void moveRight();
+void moveBackward();
+void moveLeft();
+void moveToLocation(signed int XD , signed int YD , int speed);
+void SetCarPath(signed int initial_angle, int path_distance, char speed);
+void sendData(String carIsMoving, signed int angle, int dis, int speed);
+void performSequence(String str);
+void checkCommand(String str);
+void moveSquare(float length, char speed);
+void moveTriangle(float length, char speed);
+void moveRectangle(float length, float width, char speed);
+void turnCar(signed int ang, int speed);
+void applyCarSpeed(int speed);
+void instantStop();
 
 const int MPU = 0x68; // MPU6050 I2C address
 float AccX, AccY, AccZ;
@@ -43,8 +65,12 @@ int c = 0;
 #define triangleSpeed       150
 
 #define rectangleLength     500
-#define rectangleWidth      20
+#define rectangleWidth      200
 #define rectangleSpeed      150
+
+#define X_temp_distance     75
+#define Y_temp_distance     75
+#define location_temp_speed 200
 
 int steps = 0;  // Tracks the number of steps (encoder counts)
 int distance = 0;  // Distance traveled based on encoder steps
@@ -65,16 +91,77 @@ void setup() {
   pinMode(motorEN1, OUTPUT);
   pinMode(motorEN2, OUTPUT);
   moveForward(); // Start by moving the car forward
-  moveSquare(squareLength,squareSpeed);
+
+  // Sides Moves
+  // moveToLocation(0,25,location_temp_speed); // forward
+  // delay(3000);
+  // moveToLocation(25,0,location_temp_speed); // right
+  // delay(3000);
+  // moveToLocation(0,-25,location_temp_speed); // backword
+  // delay(3000);
+  // moveToLocation(-25,0,location_temp_speed); // left
+
+  // Diagonals Moves
+  moveToLocation(300,400,location_temp_speed); // forward right
+  // delay(2000);
+  // moveToLocation(-200,-400,location_temp_speed); // forward right
+
+  // delay(3000);
+  // moveToLocation(-25,25,location_temp_speed); // forward left
+  // delay(3000);
+  // moveToLocation(25,-25,location_temp_speed); // backword right
+  // delay(3000);
+  // moveToLocation(-25,-25,location_temp_speed); // backword left
+
 }
 
 void loop() {
-  update_mpu_readings(); // Continuously update MPU6050 sensor readings
-  sendData("false", yaw, distance, 0); // Send current data over serial
-  if (Serial.available()) { 
-    // Check if data is available on the serial port
-    checkCommand(Serial.readStringUntil('\r')); // Read the command and process it
+  // update_mpu_readings(); // Continuously update MPU6050 sensor readings
+  // sendData("false", yaw, distance, 0); // Send current data over serial
+  // if (Serial.available()) { 
+  //   // Check if data is available on the serial port
+  //   checkCommand(Serial.readStringUntil('\r')); // Read the command and process it
+  // }
+}
+
+void moveToLocation(signed int XD , signed int YD , int speed)
+{
+  int Init_Angle = yaw;
+  if(XD == 0 && YD == 0)
+  {
+    return;
   }
+  if(XD == 0 && YD > 0)
+  {
+    SetCarPath(0,abs(YD),speed);
+    turnCar(Init_Angle, speedTurn); 
+    return;
+  }
+  if(XD == 0 && YD < 0)
+  {
+    SetCarPath(180,abs(YD),speed);
+    turnCar(Init_Angle, speedTurn); 
+    return;
+  }
+  if(XD > 0 && YD == 0)
+  {
+    SetCarPath(-90,abs(XD),speed);
+    turnCar(Init_Angle, speedTurn);
+    return;
+  }
+  if(XD < 0 && YD == 0)
+  {
+    SetCarPath(90,abs(XD),speed);
+    turnCar(Init_Angle, speedTurn);
+    return;
+  }
+
+  signed int angle = atan2(XD,YD) * 180 / PI;  
+  long long diameter_squared = (long long)abs(XD) * (long long)abs(XD) + (long long)abs(YD) * (long long)abs(YD);
+  int diameter = sqrt(diameter_squared);
+  SetCarPath(-angle,diameter,speed);
+  turnCar(Init_Angle, speedTurn);
+  
 }
 
 
@@ -174,6 +261,42 @@ void checkCommand(String str) {
     performSequence(str); // Execute the sequence command
   }
 
+  // Check if the command is a location command
+  // executeCoordinates:xValue=100&yValue=50&speed=200
+  // executeCoordinates:status=inProgress
+  // executeCoordinates:status=completed 
+
+  if (str.indexOf(locationCommand) > -1) {
+    String param, val;
+    str.remove(0, str.indexOf(locationCommand) + locationCommand.length() + 1);
+    // Parse the parameters from the command string
+    while (str.length() > 0) {
+      update_mpu_readings();
+      param = str.substring(0, str.indexOf(location_equalCommand)); // Get parameter name
+      str.remove(0, str.indexOf(location_equalCommand) + 1);
+
+      val = str.substring(0, str.indexOf(location_substringCommand)); // Get parameter value
+      str.remove(0, str.indexOf(val) + val.length());
+
+      // Assign values to the pathDetails array based on parameter names
+      if (param == location_Xvalue) {
+        locationDetails[0] = val.toInt(); // Set Xvalue
+      }
+      
+      if (param == location_Yvalue) {
+        locationDetails[1] = val.toInt(); // Set Yvalue
+      }
+      
+      if (param == location_Speedvalue) {
+        locationDetails[2] = val.toInt(); // Set speed
+      }
+      str.remove(0, str.indexOf(location_substringCommand) + 1);
+    }
+
+    Serial.print("executeCoordinates:status=inProgress\r");
+    SetCarPath(locationDetails[0], locationDetails[1], locationDetails[2]); // Execute the location command
+    Serial.print("executeCoordinates:status=completed\r");
+  }
   // Check if the command is a path command
   if (str.indexOf(pathCommand) > -1) {
     String param, val;
@@ -209,19 +332,11 @@ void checkCommand(String str) {
     }
 
     Serial.print("executePath:success=true&status=inProgress\r");
-    calculateAngleAndDistance(pathDetails[0],pathDetails[1],&pathDetails[0],&pathDetails[1]);
     SetCarPath(yaw + pathDetails[0], pathDetails[1], pathDetails[2]); // Execute the path command
     Serial.print("executePath:success=true&status=completed\r");
   }
 }
 
-void calculateAngleAndDistance(float x, float y, float &angle, float &distance) {
-    // Calculate the direct distance using the Pythagorean theorem
-    distance = sqrt(x * x + y * y);
-
-    // Calculate the angle in radians and convert it to degrees
-    angle = atan2(y, x) * (180.0 / PI); // Convert radians to degrees
-}
 
 /**
  * Function to move the car in a square pattern.
