@@ -1,45 +1,30 @@
-from flask import Flask, Response
-from picamera2 import Picamera2
 import cv2
+from simple_facerec import SimpleFacerec
 
-# Initialize the Flask application
-app = Flask(__name__)
+# Encode faces from a folder
+sfr = SimpleFacerec()
+sfr.load_encoding_images("known_faces/")
 
-# Initialize the camera
-picam2 = Picamera2()
-camera_config = picam2.create_video_configuration(main={"size": (640, 480)})
-picam2.configure(camera_config)
-picam2.start()
-
-
-def generate_frames():
-    """Generator function that captures frames from the camera and encodes them as JPEG."""
-    while True:
-        # Capture frame-by-frame
-        frame = picam2.capture_array()
-
-        # Convert the frame to JPEG
-        ret, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
-
-        # Yield frame in byte format for streaming
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+# Load Camera
+cap = cv2.VideoCapture(2)
 
 
-@app.route('/video_feed')
-def video_feed():
-    """Route to stream video from the camera."""
-    return Response(generate_frames(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+while True:
+    ret, frame = cap.read()
 
+    # Detect Faces
+    face_locations, face_names = sfr.detect_known_faces(frame)
+    for face_loc, name in zip(face_locations, face_names):
+        y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
-@app.route('/')
-def index():
-    """Main page with video stream."""
-    return "<h1>Raspberry Pi Camera Stream</h1><img src='/video_feed'/>"
+        cv2.putText(frame, name,(x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 4)
 
+    cv2.imshow("Frame", frame)
 
-if __name__ == '__main__':
-    # Run the Flask app
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()

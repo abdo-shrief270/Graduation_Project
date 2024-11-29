@@ -1,0 +1,87 @@
+*{
+    font-family: 'Orbitron';
+    padding: 0;
+    margin: 0;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.container{
+    width: 434px;
+    height: 340px;
+    border-radius: 10px;
+    border: 1px solid #DADCE0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 25px;
+}
+.inputs{
+    width: 394px;
+    height: 194px;
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+input{ 
+    width: 394px;
+    height: 30px;
+    border-radius: 5px;
+    border:1px solid #007BFF;
+    padding: 8px;
+    outline: none;
+}
+label{
+    font-size: 14px;
+    font-weight: 700; 
+}
+.inputs a{
+    cursor: pointer;
+    width: auto;
+    height: 42px;
+    padding: 12px 24px 12px 24px;
+    border-radius: 25px;
+    background-color:#007BFF ;
+    font-size: 14px;
+    border: none;
+    color: #fff;
+    gap: 10px;
+    display: flex;
+}
+.nu{
+    display: flex;
+    font-size: 14px;
+    font-weight: 600; 
+    gap: 5px;
+}
+span{
+    color: #007BFF;
+    cursor: pointer;
+}
+a{
+    color: #007BFF;
+    text-decoration: none;
+}
+@media (max-width:600px) {
+    .container{
+        width: 300px;
+        height: 340px;
+    }
+    .inputs{
+        width: 280px;
+        height: 194px;
+
+    }
+    input{ 
+        width: 280px;
+        height: 30px;
+    }
+}

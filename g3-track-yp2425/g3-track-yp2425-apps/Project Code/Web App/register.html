@@ -3,103 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-            font-family: 'Orbitron';
-        }
-        body{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        
-        }
-        .container{
-            
-            display: flex;
-            justify-content:center;
-            align-items: flex-start;
-            flex-direction: column;
-            width: 434px;
-            height: 568px;
-            padding: 20px;
-            gap:10px;
-            border-radius: 10px;
-            border: 1px solid #DADCE0;
-        
-        }
-        
-        label{
-            font-size: 14px;
-            font-weight: 700;
-            gap:16px;
-          
-        }
-        .inputs{
-            display: flex;
-            flex-direction: column;
-            gap:12px;
-        }
-        input{
-            width: 394px;
-            height: 30px;
-            padding: 5px;
-            border-radius: 5px ;
-            border: 1px solid #007BFF;
-            opacity: 0px;
-            cursor:pointer;
-            outline: none;
-            
-               
-        }
-        button{
-            width:  105px;
-            height: 42px;
-            padding: 12px 24px 12px 24px;
-            gap: 10px;
-            border-radius: 25px ;
-            opacity: 0px;
-            background-color: #007BFF;
-            color:white;
-            border: none;
-            cursor:pointer;
-        }
-        .bb{
-            display: flex;
-            gap:8px;
-        }
-        p{
-            font-size: 14px;
-            font-weight: 600;   
-            
-        }
-        span{
-            color: #007BFF;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        a{
-            color: #007BFF;
-            text-decoration: none;
-        }
-        @media (max-width:600px) {
-        
-            
-        
-            .container{
-            width: 300px;
-            
-        }
-            input{
-            width: 280px;
-          
-        }
-        }        
-    </style>
+    <link rel="stylesheet" href="register.css">
     <!-- ------------------------------------------------------------------------ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <!-- ------------------------------------------------------------------- -->
@@ -117,16 +21,16 @@
 </svg> </div>   
     <form class="inputs">
     <label for="a1">First name</label>
-    <input  required  type="text" placeholder="Type..." id="a1">
+    <input required type="text" placeholder="Type..." id="a1">
     <label for="a2">Last name</label>
-    <input  required  type="text" placeholder="Type..." id="a2">
+    <input required type="text" placeholder="Type..." id="a2">
     <label for="a3">Email</label>
-    <input  required  type="text" placeholder="Type..." id="a3">
+    <input required type="text" placeholder="Type..." id="a3">
     <label for="a4">Password</label>
-    <input  required  type="password" placeholder="Type..." id="a4">
+    <input required type="password" placeholder="Type..." id="a4">
     <label for="a5">Rebeat Password</label>
-    <input  required  type="password" placeholder="Type..." id="a5">
-    <button type="submit">Sign Up</button>
+    <input required type="password" placeholder="Type..." id="a5">
+    <button type="submit">Register</button>
     </form>
    
     <div class="bb"><p>Already have an account? </p> <span ><a href="login.html">Login</a></span></div>

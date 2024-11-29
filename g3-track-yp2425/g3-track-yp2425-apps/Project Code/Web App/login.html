@@ -7,100 +7,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Sign In</title>
-    <style>
-        *{
-            font-family: 'Orbitron';
-            padding: 0;
-            margin: 0;
-        }
-        body{
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .container{
-            width: 434px;
-            height: 340px;
-            border-radius: 10px;
-            border: 1px solid #DADCE0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: start;
-            gap: 25px;
-        }
-        .inputs{
-            width: 394px;
-            height: 194px;
-            display: flex;
-            gap: 16px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-        }
-        label{
-            font-size: 14px;
-            font-weight: 700; 
-        }
-        input{ 
-            width: 394px;
-            height: 30px;
-            border-radius: 5px;
-            border:1px solid #007BFF;
-            padding: 8px;
-            outline: none;
-        }
-        button{
-            cursor: pointer;
-            width: 96px;
-            height: 42px;
-            padding: 12px 24px 12px 24px;
-            border-radius: 25px;
-            background-color:#007BFF ;
-            font-size: 14px;
-            border: none;
-            color: #fff;
-            gap: 10px;
-            display: flex;
-        }
-        .nu{
-            display: flex;
-            font-size: 14px;
-            font-weight: 600; 
-            gap: 5px;
-        }
-        span{
-            color: #007BFF;
-            cursor: pointer;
-        }
-        a{
-            color: #007BFF;
-            text-decoration: none;
-        }
-    </style>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <div class="container">
-            <div class="logo">
+    <form class="container">
                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M37.3337 28.6666C37.3337 36.9883 28.102 45.6549 25.002 48.3316C24.7132 48.5487 24.3617 48.6662 24.0003 48.6662C23.639 48.6662 23.2875 48.5487 22.9987 48.3316C19.8987 45.6549 10.667 36.9883 10.667 28.6666C10.667 25.1304 12.0718 21.739 14.5722 19.2385C17.0727 16.738 20.4641 15.3333 24.0003 15.3333C27.5365 15.3333 30.9279 16.738 33.4284 19.2385C35.9289 21.739 37.3337 25.1304 37.3337 28.6666Z" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M24.0003 33.6666C26.7617 33.6666 29.0003 31.428 29.0003 28.6666C29.0003 25.9052 26.7617 23.6666 24.0003 23.6666C21.2389 23.6666 19.0003 25.9052 19.0003 28.6666C19.0003 31.428 21.2389 33.6666 24.0003 33.6666Z" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M36 48H39M39 48C39 51.866 42.134 55 46 55M39 48C39 44.134 42.134 41 46 41M53 48H56M53 48C53 51.866 49.866 55 46 55M53 48C53 44.134 49.866 41 46 41M46 38V41M46 55V58M49 48C49 49.6569 47.6569 51 46 51C44.3431 51 43 49.6569 43 48C43 46.3431 44.3431 45 46 45C47.6569 45 49 46.3431 49 48Z" stroke="#007BFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-            </div>
-            <form class="inputs">
+            <div class="inputs">
                 <label for="un">Username</label>
                 <input required type="text" id="un" placeholder="Type..">
                 <label for="pass">Password</label>
                 <input required type="password" id="pass" placeholder="Type..">
-                <button type="submit">Log in</button>
-            </form>
+                <a type="submit" href="index.html">Log in</a>
+            </div>
             <div class="nu">
                 <p>New user?</p><span> <a href="register.html">Sign up</a></span>
             </div>
-        </div>
+        </form>
 </body>
 </html>

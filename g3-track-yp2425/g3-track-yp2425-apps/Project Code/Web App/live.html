@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream</title>
+    <link rel="stylesheet" href="live.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="battary-status">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.3327 22.6666H13.346M13.3327 9.33331V17.3333M18.666 9.33331H21.3327C22.0399 9.33331 22.7182 9.61426 23.2183 10.1144C23.7184 10.6145 23.9993 11.2927 23.9993 12V20C23.9993 20.7072 23.7184 21.3855 23.2183 21.8856C22.7182 22.3857 22.0399 22.6666 21.3327 22.6666H18.666M29.3327 14.6666V17.3333M7.99935 9.33331H5.33268C4.62544 9.33331 3.94716 9.61426 3.44706 10.1144C2.94697 10.6145 2.66602 11.2927 2.66602 12V20C2.66602 20.7072 2.94697 21.3855 3.44706 21.8856C3.94716 22.3857 4.62544 22.6666 5.33268 22.6666H7.99935" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p>Battery is critically low</p>
+    </div>
+    <div class="nav-bar">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M37.3337 28.6666C37.3337 36.9883 28.102 45.6549 25.002 48.3316C24.7132 48.5487 24.3617 48.6662 24.0003 48.6662C23.639 48.6662 23.2875 48.5487 22.9987 48.3316C19.8987 45.6549 10.667 36.9883 10.667 28.6666C10.667 25.1304 12.0718 21.739 14.5722 19.2385C17.0727 16.738 20.4641 15.3333 24.0003 15.3333C27.5365 15.3333 30.9279 16.738 33.4284 19.2385C35.9289 21.739 37.3337 25.1304 37.3337 28.6666Z" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M24.0003 33.6666C26.7617 33.6666 29.0003 31.428 29.0003 28.6666C29.0003 25.9052 26.7617 23.6666 24.0003 23.6666C21.2389 23.6666 19.0003 25.9052 19.0003 28.6666C19.0003 31.428 21.2389 33.6666 24.0003 33.6666Z" stroke="#007BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M36 48H39M39 48C39 51.866 42.134 55 46 55M39 48C39 44.134 42.134 41 46 41M53 48H56M53 48C53 51.866 49.866 55 46 55M53 48C53 44.134 49.866 41 46 41M46 38V41M46 55V58M49 48C49 49.6569 47.6569 51 46 51C44.3431 51 43 49.6569 43 48C43 46.3431 44.3431 45 46 45C47.6569 45 49 46.3431 49 48Z" stroke="#007BFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="list">
+                <li style="cursor: pointer;"><a href="index.html">Home</a></li>
+                <li style="cursor: pointer;"><a href="manual.html">Manual control</a></li>
+                <li style="cursor: pointer;"><a href="auto.html">Automatic control</a></li>
+                <li style="cursor: pointer;"><a style="color: #007BFF;" href="live.html">Live Stream</a></li>
+                <li style="cursor: pointer;"><a href="register.html">Register</a></li>
+                <li style="cursor: pointer;"><a href="login.html">Login</a></li>
+            </div>
+    </div>
+    <div class="container">
+        <div class="con">
+        <div class="left">
+            <p style="font-size: 32px;font-weight: 700;">Live stream</p>
+            <svg class="non" width="71" height="46" viewBox="0 0 71 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.5" width="70" height="46" rx="23" fill="#D7DCE5" fill-opacity="0.5"/>
+                <path d="M34.2713 17.5H37.333C37.8192 17.5 38.2856 17.6932 38.6294 18.037C38.9732 18.3808 39.1663 18.8471 39.1663 19.3334V21.625L43.977 18.8182C44.0467 18.7776 44.1258 18.756 44.2065 18.7557C44.2871 18.7555 44.3664 18.7765 44.4363 18.8166C44.5062 18.8568 44.5643 18.9147 44.6047 18.9845C44.6451 19.0543 44.6664 19.1336 44.6663 19.2142V26.7272M39.1663 26.6667C39.1663 27.1529 38.9732 27.6193 38.6294 27.9631C38.2856 28.3069 37.8192 28.5 37.333 28.5H28.1663C27.6801 28.5 27.2138 28.3069 26.87 27.9631C26.5262 27.6193 26.333 27.1529 26.333 26.6667V19.3334C26.333 18.8471 26.5262 18.3808 26.87 18.037C27.2138 17.6932 27.6801 17.5 28.1663 17.5H29.9997M26.333 13.8334L44.6663 32.1667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <iframe src="https://www.wikipedia.org/" width="624" height="385"></iframe>
+        </div>
+        <div class="right">
+            <p style="font-size: 24px;font-weight: 700;">Status</p>
+            <div class="car-status">
+                <p>No one inside</p>
+            </div>
+            <div class="cam-battery">
+                <div class="space">
+                    <p style="color: #767676;">Camera</p>
+                    <p style="color: #28A745;font-size: 16px;font-weight: 700;">Operating normally</p>
+                </div>
+                <div class="space">
+                    <p style="color: #767676;">Battery percentage</p>
+                    <p style="color: #DC3545;font-size: 16px;font-weight: 700;">20% (Critically low)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>
