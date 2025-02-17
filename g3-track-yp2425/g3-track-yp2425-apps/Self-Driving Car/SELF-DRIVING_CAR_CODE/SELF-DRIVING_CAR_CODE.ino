@@ -91,79 +91,16 @@ void setup() {
   pinMode(motorEN1, OUTPUT);
   pinMode(motorEN2, OUTPUT);
   moveForward(); // Start by moving the car forward
-
-  // Sides Moves
-  // moveToLocation(0,25,location_temp_speed); // forward
-  // delay(3000);
-  // moveToLocation(25,0,location_temp_speed); // right
-  // delay(3000);
-  // moveToLocation(0,-25,location_temp_speed); // backword
-  // delay(3000);
-  // moveToLocation(-25,0,location_temp_speed); // left
-
-  // Diagonals Moves
-  moveToLocation(300,400,location_temp_speed); // forward right
-  // delay(2000);
-  // moveToLocation(-200,-400,location_temp_speed); // forward right
-
-  // delay(3000);
-  // moveToLocation(-25,25,location_temp_speed); // forward left
-  // delay(3000);
-  // moveToLocation(25,-25,location_temp_speed); // backword right
-  // delay(3000);
-  // moveToLocation(-25,-25,location_temp_speed); // backword left
-
 }
 
 void loop() {
-  // update_mpu_readings(); // Continuously update MPU6050 sensor readings
-  // sendData("false", yaw, distance, 0); // Send current data over serial
-  // if (Serial.available()) { 
-  //   // Check if data is available on the serial port
-  //   checkCommand(Serial.readStringUntil('\r')); // Read the command and process it
-  // }
+  update_mpu_readings(); // Continuously update MPU6050 sensor readings
+  sendData("false", yaw, distance, 0); // Send current data over serial
+  if (Serial.available()) { 
+    // Check if data is available on the serial port
+    checkCommand(Serial.readStringUntil('\r')); // Read the command and process it
+  }
 }
-
-void moveToLocation(signed int XD , signed int YD , int speed)
-{
-  int Init_Angle = yaw;
-  if(XD == 0 && YD == 0)
-  {
-    return;
-  }
-  if(XD == 0 && YD > 0)
-  {
-    SetCarPath(0,abs(YD),speed);
-    turnCar(Init_Angle, speedTurn); 
-    return;
-  }
-  if(XD == 0 && YD < 0)
-  {
-    SetCarPath(180,abs(YD),speed);
-    turnCar(Init_Angle, speedTurn); 
-    return;
-  }
-  if(XD > 0 && YD == 0)
-  {
-    SetCarPath(-90,abs(XD),speed);
-    turnCar(Init_Angle, speedTurn);
-    return;
-  }
-  if(XD < 0 && YD == 0)
-  {
-    SetCarPath(90,abs(XD),speed);
-    turnCar(Init_Angle, speedTurn);
-    return;
-  }
-
-  signed int angle = atan2(XD,YD) * 180 / PI;  
-  long long diameter_squared = (long long)abs(XD) * (long long)abs(XD) + (long long)abs(YD) * (long long)abs(YD);
-  int diameter = sqrt(diameter_squared);
-  SetCarPath(-angle,diameter,speed);
-  turnCar(Init_Angle, speedTurn);
-  
-}
-
 
 /**
  * Function to set the car's path and control its movement.
@@ -262,10 +199,6 @@ void checkCommand(String str) {
   }
 
   // Check if the command is a location command
-  // executeCoordinates:xValue=100&yValue=50&speed=200
-  // executeCoordinates:status=inProgress
-  // executeCoordinates:status=completed 
-
   if (str.indexOf(locationCommand) > -1) {
     String param, val;
     str.remove(0, str.indexOf(locationCommand) + locationCommand.length() + 1);
